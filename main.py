@@ -1,8 +1,8 @@
 import streamlit as st
 import openai
-import os
-from os.path import join, dirname
-from dotenv import load_dotenv
+# import os
+# from os.path import join, dirname
+# from dotenv import load_dotenv
 
 # api key setting for local
 # load_dotenv(join(dirname(__file__), '.env'))
