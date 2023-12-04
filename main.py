@@ -1,15 +1,19 @@
 import streamlit as st
-import openai
+from openai import OpenAI
 # import os
 # from os.path import join, dirname
 # from dotenv import load_dotenv
 
 # api key setting for local
-# load_dotenv(join(dirname(__file__), '.env'))
-# openai.api_key = os.environ.get("API_KEY")
+# # load_dotenv(join(dirname(__file__), '.env'))
+# client = OpenAI(
+#     api_key=os.environ.get("API_KEY"),
+# )
 
 # api key setting for deploy
-openai.api_key = st.secrets.ChatGptKey.key
+client = OpenAI(
+    api_key=st.secrets.ChatGptKey.key,
+)
 
 
 # ask openai when send-button clicked
@@ -29,13 +33,13 @@ def ask_chatgpt():
         st.session_state.question_input = ""
 
         # make response
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=st.session_state.messages
         )
 
         # add response to session
-        st.session_state.messages.append(response.choices[0]["message"])
+        st.session_state.messages.append({'role': 'assistant', 'content': response.choices[0].message.content})
 
 
 def main():
